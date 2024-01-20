@@ -1,8 +1,7 @@
 function convertToRoman(num) {
 
   let strNum = num.toString().split('').toReversed()
-  console.log(strNum);
-
+  
   let arrMultipli = [1, 10, 100, 1000];
   let baseRomaneNums = [1, 4, 5, 9];
 
@@ -25,35 +24,28 @@ function convertToRoman(num) {
   let transformNaturalToRomane = (num, multipli) => {
     let numToTransform = num * multipli;
     
-    let romaneNum = 'foo';
+    let romaneNum = '';
     for(let x=0; x<baseRomaneNums.length; x++){
-    
+      
       let baseToCompare = (baseRomaneNums[x] * multipli);
 
       if(numToTransform == baseToCompare){
         romaneNum = objRomaneNumbers[baseToCompare];
         break;
-      } else{
-        
-        if(numToTransform < baseToCompare){
-          romaneNum = objRomaneNumbers[baseToCompare];
-          break;
-        }
+      } else if(numToTransform < baseToCompare){
+          
+        romaneNum += objRomaneNumbers[(baseRomaneNums[x-1] * multipli)];
+        romaneNum += objRomaneNumbers[multipli].repeat( (num - baseRomaneNums[x-1]) );
+
+        break;
       }
     };
 
     return romaneNum;
   };
 
-  strNum.forEach((elem, i) => {
-
-    let response = transformNaturalToRomane(elem, arrMultipli[i]);
-    console.log(response);
-  });
-
-  return num;
+  return strNum.map((elem, i) => transformNaturalToRomane(elem, arrMultipli[i]) ).toReversed().join('');
 }
  
-convertToRoman(36);
-convertToRoman(399);
-// convertToRoman(4000);
+let response = convertToRoman(44);
+console.log(response);

@@ -1,51 +1,72 @@
 function convertToRoman(num) {
 
-  let strNum = num.toString().split('').toReversed()
+  // let strNum = num.toString().split('').toReversed();
   
-  let arrMultipli = [1, 10, 100, 1000];
-  let baseRomaneNums = [1, 4, 5, 9];
+  let arrMultipli = [1, 10, 100];
+  // let baseRomaneNums = [1, 4, 5, 9];
 
   let objRomaneNumbers = {
-    1: 'I', 
-    4: 'IV', 
-    5: 'V', 
-    9: 'IX', 
-    10: 'X', 
-    40: 'LX', 
-    50: 'L', 
-    90: 'XC', 
-    100: 'C', 
-    400: 'CD', 
-    500: 'D', 
-    900: 'CM', 
-    1000: 'M'
+    '1': 'I', 
+    '4': 'IV', 
+    '5': 'V', 
+    '9': 'IX', 
+    '10': 'X', 
+    '40': 'XL', 
+    '50': 'L', 
+    '90': 'XC', 
+    '100': 'C', 
+    '400': 'CD', 
+    '500': 'D', 
+    '900': 'CM', 
+    '1000': 'M'
   };
 
   let transformNaturalToRomane = (num, multipli) => {
-    let numToTransform = num * multipli;
-    
-    let romaneNum = '';
-    for(let x=0; x<baseRomaneNums.length; x++){
-      
-      let baseToCompare = (baseRomaneNums[x] * multipli);
+   
+    // let numToTransform = num * multipli;
+    let numToTransform = num;
 
-      if(numToTransform == baseToCompare){
-        romaneNum = objRomaneNumbers[baseToCompare];
-        break;
-      } else if(numToTransform < baseToCompare){
-          
-        romaneNum += objRomaneNumbers[(baseRomaneNums[x-1] * multipli)];
-        romaneNum += objRomaneNumbers[multipli].repeat( (num - baseRomaneNums[x-1]) );
+    let romaneNum = 'foo';
 
-        break;
-      }
-    };
+    if(numToTransform == (1 * multipli)){
+      romaneNum = objRomaneNumbers[(1 * multipli)];
+      return romaneNum;
+    } else if(numToTransform > (1 * multipli) && numToTransform < (4 * multipli)){
+      romaneNum = objRomaneNumbers[(1 * multipli)].repeat(num);
+      return romaneNum;
+    } else if(numToTransform == (4 * multipli)){
+      romaneNum = objRomaneNumbers[(4 * multipli)];
+      return romaneNum;
+    } else if(numToTransform == (5 * multipli)){
+      romaneNum = objRomaneNumbers[(5 * multipli)];
+      return romaneNum;
+    } else if(numToTransform > (5 * multipli) && numToTransform < (9 * multipli)){  
+      romaneNum = objRomaneNumbers[(5 * multipli)];
+      romaneNum += objRomaneNumbers[(1 * multipli)].repeat(num - 5);
+      return romaneNum;
+    } else if(numToTransform == (9 * multipli)){
+      romaneNum = objRomaneNumbers[(9 * multipli)];
+    } else if(numToTransform == (10 * multipli)){
+      romaneNum = objRomaneNumbers[(10 * multipli)];
+      return romaneNum;
+    }
 
     return romaneNum;
   };
 
-  return strNum.map((elem, i) => transformNaturalToRomane(elem, arrMultipli[i]) ).toReversed().join('');
+  let romaneNumber;
+
+  for(let i=0; i<arrMultipli.length; i++){
+    romaneNumber = transformNaturalToRomane(num, arrMultipli[i]);
+
+    if(romaneNumber !== 'foo')
+      break;
+  }
+
+  return romaneNumber;
 }
  
-let response = convertToRoman(44);
-console.log(response);
+for(let i=1; i<=20; i++){
+  let response = convertToRoman(i);
+  console.log(i, '-', response);
+}

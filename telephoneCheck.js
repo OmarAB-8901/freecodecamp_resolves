@@ -1,45 +1,41 @@
 
 function telephoneCheck(str) {
 
-   // str = str.replace(/[^0-9)(]/g, '')
-console.log(str);
-   // let regexTelUSA = /1[\s-]?[(]?[0-9]+[)]?[\s-]?[0-9]+[\s-]?[0-9]+/g;
-   let regexTelUSA = /1[\s-]?[(0-9)]+[\s-]?[0-9]+[\s-]?[0-9]+/g;
-console.log(regexTelUSA.test(str), str.match(regexTelUSA));
-   return regexTelUSA.test(str);
+   let onlyNumbers = str.replace(/[^0-9]/g, '');
+   console.log(str, onlyNumbers, onlyNumbers.length);
+   
+   let response;
+   let regexTelUSA;
+   if(onlyNumbers.length == 11){
+      
+      regexTelUSA = /^1?[\s-][(0-9)]+[\s-]?[0-9]+[\s-]?[0-9]+/g;
+      console.log(regexTelUSA.test(str), str.match(regexTelUSA));
+      response = regexTelUSA.test(str);
+
+   } else if(onlyNumbers.length == 10){
+      
+      regexTelUSA = /[^( 0-9]+[\s-]?[0-9]+[\s-]?[0-9]+/g;
+      console.log(regexTelUSA.test(str), str.match(regexTelUSA));
+      response = regexTelUSA.test(str);
+
+   }
+
+   if(str.includes('(') && !str.includes(')') || !str.includes('(') && str.includes(')'))
+      response = false;
+
+   return response;
  }
  
  let response;
  
- response = telephoneCheck("555-555-5555");
+ response = telephoneCheck("1 (555)555-5555");
+ console.log(response, '\n');
+
+ response = telephoneCheck("1 555)555-5555");
  console.log(response, '\n');
  
- response = telephoneCheck("1 555-555-5555");
+ response = telephoneCheck("(6054756961)");
  console.log(response, '\n');
 
- response = telephoneCheck("1555-555-5555");
+ response = telephoneCheck("55 5555 5555");
  console.log(response, '\n');
- 
-//  response = telephoneCheck("555 555 5555");
-//  console.log(response, '\n');
-
-//  response = telephoneCheck("(555) 555 5555");
-//  console.log(response, '\n');
-
- response = telephoneCheck("1 (555) 555 5555");
- console.log(response, '\n');
-
- response = telephoneCheck("2 (555) 555 5555");
- console.log(response, '\n');
-
- response = telephoneCheck("1 (555 555 5555");
- console.log(response, '\n');
-
-//  response = telephoneCheck("123**&!!asdf#");
-//  console.log(response, '\n');
-
- response = telephoneCheck("-1 (757) 622-7382")
- console.log(response, '\n');
-
-//  response = telephoneCheck("(555)5(55?)-5555");
-//  console.log(response, '\n');

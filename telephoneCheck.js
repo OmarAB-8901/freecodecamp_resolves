@@ -1,10 +1,6 @@
 
 function telephoneCheck(str) {
 
-   let regexFistValidate = /^[0-9)(-]/g;
-   let firstValidate = regexFistValidate.test(str);
-   console.log("fist Validate", firstValidate);
-
    let onlyNumbers = str.replace(/[^0-9]/g, '');
    console.log(str, onlyNumbers, onlyNumbers.length);
    
@@ -18,9 +14,8 @@ function telephoneCheck(str) {
       response = regexTelUSA.test(str);
 
    } else if(onlyNumbers.length == 10){
-      
-      // regexTelUSA = /[^( 0-9]+[\s-]?[0-9]+[\s-]?[0-9]+/g;
-      regexTelUSA = /[(]?[^( 0-5]+[\s-]?[0-9]+[\s-]?[0-9]+|^5+[0-9]/g;
+
+      regexTelUSA = /^[(][0-5][)]?[\s]+[0-9]+[\s-]+[0-9]|^5[0-9]/g;
       console.log("ELSE IF", regexTelUSA.test(str), str.match(regexTelUSA));
       response = regexTelUSA.test(str);
    } else {
@@ -38,7 +33,7 @@ function telephoneCheck(str) {
  response = telephoneCheck("(555)555-5555") // true 1
  console.log(response, '\n');
  
- response = telephoneCheck("1(555)555-5555") // true 2
+ response = telephoneCheck("(275)76227382") // false 2
  console.log(response, '\n');
  
  response = telephoneCheck("55 55-55-555-5") // false 3

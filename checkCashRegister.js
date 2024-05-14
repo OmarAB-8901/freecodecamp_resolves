@@ -3,7 +3,7 @@ function checkCashRegister(price, cash, cid) {
   cid = cid.reverse();
 
   let returnCash = (cash - price).toFixed(2);
-  console.log(returnCash);
+
   let valueMoney = [
     { name: 'ONE HUNDRED', value: 100 },
     { name: 'TWENTY', value: 20 },
@@ -43,12 +43,22 @@ function checkCashRegister(price, cash, cid) {
     }
   }
 
-  console.log(valueChange);
+  valueChange = Object.keys(valueChange).map( elem => [elem, valueChange[elem]] );
 
-  let cidReturn = { STATUS: "", CHANGE: [] };
+  let statusChange = (change) => {
 
-  let change;
-  return change;
+    let totalCash_CID = (cid.reduce( (accum, elem) => accum + (elem[1]),  0)).toFixed(2);
+    totalCash_CID = Number(totalCash_CID);
+
+    console.log(totalCash_CID);
+
+    return "OPEN";
+  }
+
+  let cidReturn = { STATUS: statusChange(), CHANGE: valueChange };
+  console.log(cidReturn);
+
+  return valueChange;
 }
 
 checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
